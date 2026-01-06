@@ -21,8 +21,8 @@ Local AI Bug Hunter is a hybrid **agentic RAG security analysis system** that co
 
 | Purpose | Model |
 |------|------|
-| LLM Reasoning | `qwen2.5-coder:32b` |
-| Embeddings | `nomic-embed-text:v2` |
+| LLM Reasoning | `deepseek-r1:8b ` |
+| Embeddings | `nomic-embed-text:latest` |
 
 ---
 
@@ -58,7 +58,7 @@ graph TD
     D --> F[Findings JSON]
     E --> G[Retrieved Knowledge Context]
 
-    F --> H[LLM Analysis Node<br>(Qwen2.5-Coder)]
+    F --> H[LLM Analysis Node<br>(deepseek-r1:8b )]
     G --> H
 
     H --> I[Final Report<br>(Markdown)]
@@ -75,7 +75,7 @@ graph TD
 | Agent Orchestration | LangGraph | Stateful, conditional workflow |
 | Static Analysis | Semgrep | Fast, reliable vulnerability detection |
 | Retrieval (RAG) | Chroma + Ollama | Grounding LLM outputs |
-| LLM | Qwen2.5-Coder | Deep reasoning & remediation |
+| LLM | deepseek-r1:8b  | Deep reasoning & remediation |
 | Knowledge Base | Local docs | OWASP, CWE, CVE references |
 
 ---
@@ -93,8 +93,8 @@ graph TD
 ### 1️⃣ Pull Required Models
 
 ```bash
-ollama pull qwen2.5-coder:32b
-ollama pull nomic-embed-text:v2
+ollama pull deepseek-r1:8b 
+ollama pull nomic-embed-text:latest
 ```
 
 ---

@@ -1,0 +1,17 @@
+streamlit>=1.32.0
+langgraph>=0.0.15
+pyyaml>=6.0.1
+python-dotenv>=1.0.0
+pydantic>=2.5.0
+tqdm>=4.66.0
+
+# LangChain
+langchain-ollama>=0.1.4
+langchain-chroma>=0.0.17
+chromadb>=0.4.22
+
+# Security Scanning
+semgrep>=1.54.0
+
+# Local LLM
+ollama>=0.1.5

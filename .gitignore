@@ -1,0 +1,6 @@
+temp/
+rag/data/vector_db/
+__pycache__/
+*.pyc
+venv/
+rag/data/sources/
