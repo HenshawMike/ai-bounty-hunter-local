@@ -49,20 +49,30 @@ Final Markdown Security Report
 
 ```mermaid
 graph TD
-    A[User Input<br>(Code paste / upload)] --> B[Streamlit UI<br>(app.py)]
-    B --> C[LangGraph Agent<br>(agent_graph.py)]
+    A[User Input] --> B[Streamlit UI]
+    B --> C[LangGraph Agent]
 
-    C --> D[Semgrep Scanner<br>(Deterministic)]
-    C --> E[RAG Retriever<br>(Chroma DB)]
+    C --> D[Semgrep Scanner]
+    C --> E[RAG Retriever]
 
     D --> F[Findings JSON]
-    E --> G[Retrieved Knowledge Context]
+    E --> G[Knowledge Context]
 
-    F --> H[LLM Analysis Node<br>(deepseek-r1:8b )]
+    F --> H[LLM Analysis]
     G --> H
 
-    H --> I[Final Report<br>(Markdown)]
+    H --> I[Final Report]
     I --> B
+
+    %% Styling
+    classDef default fill:#f0f4f8,stroke:#333,stroke-width:2px,color:#333;
+    classDef scanner fill:#e3f2fd,stroke:#1976d2,stroke-width:2px;
+    classDef rag fill:#e8f5e9,stroke:#388e3c,stroke-width:2px;
+    classDef llm fill:#fff3e0,stroke:#f57c00,stroke-width:2px;
+    
+    class D scanner;
+    class E rag;
+    class H llm;
 ```
 
 ---
