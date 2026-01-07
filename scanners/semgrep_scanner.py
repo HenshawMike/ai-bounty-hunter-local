@@ -12,7 +12,7 @@ def run_semgrep_scan(code_path: str = code_path,
                     semgrep_config: str = semgrep_config):
     try:
         result = subprocess.run(
-            ["semgrep", "scan", "--config", semgrep_config, "--json","--quiet", code_path],
+            ["semgrep", "scan",  "--config",semgrep_config,  "--json","--quiet","--timeout","0", code_path],
             capture_output=True,
             text = True,
             timeout=60,
@@ -21,7 +21,9 @@ def run_semgrep_scan(code_path: str = code_path,
             data= json.loads(result.stdout)
             return data.get("results", [])
         else:
-            print("Semgrep warning/error (non-fatal):", result.stderr.strip())
+            print(f"Semgrep warning/error (non-fatal) - Return code: {result.returncode}")
+            print("Stderr:", result.stderr.strip())
+            print("Stdout:", result.stdout.strip()) #
             return []
     except subprocess.TimeoutExpired:
         print("Semgrep scan timed out", code_path)

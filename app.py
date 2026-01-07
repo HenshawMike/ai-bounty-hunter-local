@@ -6,7 +6,7 @@ import os
 st.set_page_config(page_title="Local AI Bug Hunter", layout="wide")
 st.title("🔒 Local AI Bug Hunter – Agentic RAG Edition (Jan 2026)")
 
-st.info("Fully offline • qwen2.5-coder:32b + Semgrep + RAG • Ethical use only")
+st.info("Fully offline • deepseek-r1:8b + Semgrep + RAG • Ethical use only")
 
 code_input = st.text_area("Paste source code here", height=400, placeholder="Enter code to scan...")
 uploaded = st.file_uploader("Or upload a file", type=["py", "js", "java", "cpp", "go", "c", "php"])

@@ -89,10 +89,7 @@ def analysis_node(state):
     response= llm.invoke([HumanMessage(content=prompt)])
     return {"report": response.content}
 
-def decide_continue(state):
-    if state["iterations"] >= config["max_iterations"]:
-        return END
-    return "retriever"
+
 
 
 graph = StateGraph(AgentState)
@@ -103,7 +100,7 @@ graph.add_node("analysis", analysis_node)
 graph.set_entry_point("scanner")
 graph.add_edge("scanner", "retrieval")
 graph.add_edge("retrieval", "analysis")
-graph.add_conditional_edges("analysis", decide_continue)
+graph.add_edge("analysis", END)
 
 
 agent = graph.compile()

@@ -5,7 +5,8 @@ import yaml
 with open("config.yaml") as f:
     config = yaml.safe_load(f)
 
-embeddings = OllamaEmbeddings(model_name=config["embedding_model"])
+embeddings = OllamaEmbeddings(model=config["embedding_model"]
+                            )
 
 def get_retriever():
     vectorstore= Chroma(
