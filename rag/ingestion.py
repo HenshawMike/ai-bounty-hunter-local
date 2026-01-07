@@ -1,18 +1,37 @@
-from langchain.document_loaders import DirectoryLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_chroma import Chroma
 from langchain_ollama import OllamaEmbeddings
+from langchain_community.document_loaders.text import TextLoader
+from langchain_community.document_loaders.pdf import PyPDFLoader
+from pathlib import Path
 import yaml
 
-with open("config.yaml") as f: # Open config file
+
+
+with open("config.yaml") as f:
     config = yaml.safe_load(f)
 
-loader = DirectoryLoader("rag/data/sources", # Load documents from sources directory
-         glob="**/*.{md,txt,pdf}", # Load all markdown, txt, and pdf files
-         show_progress=True)
-docs = loader.load()
 
-splitter = RecursiveCharacterTextSplitter( 
+source_dir = Path("rag/data/sources")
+docs = []
+
+
+
+for path in source_dir.rglob("*"):
+    if path.suffix == ".md" or path.suffix == ".txt":
+        docs.extend(TextLoader(str(path), encoding="utf-8").load())
+    elif path.suffix == ".pdf":
+        docs.extend(PyPDFLoader(str(path)).load())
+    elif path.suffix == ".docx":
+        docs.extend(PyPDFLoader(str(path)).load())
+    elif path.suffix == ".html":
+        docs.extend(PyPDFLoader(str(path)).load())
+
+if not docs:
+    raise ValueError("No documents loaded")
+
+
+splitter = RecursiveCharacterTextSplitter(
     chunk_size=config["chunk_size"], # Split documents into chunks of size chunk_size
     chunk_overlap=config["chunk_overlap"], # Overlap between chunks
     length_function=len,
@@ -20,21 +39,21 @@ splitter = RecursiveCharacterTextSplitter(
     is_separator_regex=False,
     keep_separator=True
 )
-chunks = splitter.split_documents(docs) # Split documents into chunks
+chunks = splitter.split_documents(docs)
 
 
 if not chunks: # Check if chunks were generated
     raise ValueError("No chunks generated")
-if not docs: # Check if documents were loaded
-    raise ValueError("No documents loaded")
 
 embeddings = OllamaEmbeddings(model=config["embedding_model"]) # Initialize embeddings
 
-Chroma.from_documents(
+# Vector DB
+vectorstore = Chroma.from_documents(
     documents=chunks,
     embedding=embeddings,
     persist_directory=config["vector_db_path"],
-    
-) # Initialize Chroma vector database
+)
 
-print("RAG knowledge base built successfully")
+vectorstore.persist()
+
+print(f"RAG knowledge base built successfully ({len(chunks)} chunks)")

@@ -15,3 +15,7 @@ semgrep>=1.54.0
 
 # Local LLM
 ollama>=0.1.5
+langchain>=1.2.1
+langchain-text-splitters>=1.1.0
+langchain-community>=0.4
+unstructured>=0.5.1

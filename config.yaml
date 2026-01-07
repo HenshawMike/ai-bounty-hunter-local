@@ -3,3 +3,6 @@ embedding_model: nomic-embed-text:latest
 vector_db_path: rag/data/vector_db
 top_k_retrieval: 6
 max_iterations: 3
+chunk_size: 1000
+chunk_overlap: 200
+semgrep_config: p/default
